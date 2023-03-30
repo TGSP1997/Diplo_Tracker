@@ -3,9 +3,6 @@
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.linting.enabled": true,
-  "python.analysis.extraPaths": [
-    "./OTCamera"
-  ],
   "python.languageServer": "Pylance",
   "python.testing.pytestArgs": [
     "tests"
