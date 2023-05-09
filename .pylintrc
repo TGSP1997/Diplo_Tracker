@@ -1,2 +1,2 @@
 [MASTER]
-ignore=ExtRepros
+ignore-patterns=**/ExtRepros/**/*.py

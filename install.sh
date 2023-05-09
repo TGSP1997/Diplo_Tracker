@@ -15,7 +15,9 @@ fi
 if [ ! -d "$WORKING_DIR"/ExtRepros/OTAnalytics ]; then
   git clone https://github.com/OpenTrafficCam/OTAnalytics.git "$WORKING_DIR"/ExtRepros/OTAnalytics
 fi
-
+if [ ! -d "$WORKING_DIR"/ExtRepros/deep_sort ]; then
+  git clone https://github.com/nwojke/deep_sort.git "$WORKING_DIR"/ExtRepros/deep_sort
+fi
 #Requierements of ExtRepros
 source "$WORKING_DIR"/.venv/Scripts/activate
 python -m pip install --upgrade -r "$WORKING_DIR"/ExtRepros/OTVision/requirements.txt
