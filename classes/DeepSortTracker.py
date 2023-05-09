@@ -3,7 +3,7 @@ from deep_sort.deep_sort_app import run
 from pathlib import Path
 import time
 from functools import wraps
-from helpers.convert_ot_files import write_txt_from_otdet, write_ottrk_from_txt
+from .helpers.convert_ot_files import write_txt_from_otdet, write_ottrk_from_txt
 def timeit(func):
     """
     https://dev.to/kcdchennai/python-decorator-to-measure-execution-time-54hk
