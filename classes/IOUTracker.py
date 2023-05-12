@@ -2,6 +2,7 @@ from OTVision.track.track import main as tracker
 from pathlib import Path
 import time
 from functools import wraps
+import os
 
 def timeit(func):
     """
@@ -75,8 +76,9 @@ class IOUTracker:
         time.sleep(1)
         new_name = self.otdet_path.parent / f"{self.otdet_path.stem}_iou.ittrk"
         new_path = self.otdet_path.parent / (self.otdet_path.stem + '.ottrk')
+        if new_name.is_file():
+            os.remove(new_name)
         new_path.rename(new_name)
-        print(new_path.as_posix())
 
 if __name__ == "__main__":
     obj= IOUTracker(
