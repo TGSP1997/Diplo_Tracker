@@ -74,7 +74,7 @@ class IOUTracker:
 
     def rename(self):
         time.sleep(1)
-        new_name = self.otdet_path.parent / f"{self.otdet_path.stem}_iou.ittrk"
+        new_name = self.otdet_path.parent / f"{self.otdet_path.stem}_iou.ottrk"
         new_path = self.otdet_path.parent / (self.otdet_path.stem + '.ottrk')
         if new_name.is_file():
             os.remove(new_name)

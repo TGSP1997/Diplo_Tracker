@@ -1,10 +1,10 @@
 
-
+# **REWORK TO DO**
+- [**REWORK TO DO**](#rework-to-do)
 - [**Diplo\_Tracker**](#diplo_tracker)
 - [**Installation**](#installation)
 - [**Folder Structure of Metadata**](#folder-structure-of-metadata)
 - [**Usage**](#usage)
-  - [| GNN    | TODO |](#-gnn-----todo-)
 - [**References**](#references)
 
 ---
@@ -54,7 +54,7 @@ Every Tracker needs its own files beforehand
 |-------|------|
 | IOU    | .otdet |
 | DeepSORT    | img1 (Image Sequence) and .otdet |
-| GNN    | TODO |
+
 ---
 # **References**
 
@@ -62,4 +62,3 @@ Every Tracker needs its own files beforehand
 |-------|------|
 | OTVision    |  [OTVision](https://github.com/OpenTrafficCam/OTVision)  |
 | DeepSORT   | [DeepSORT](https://github.com/nwojke/deep_sort) modified to run again and forked in [Modified DeepSORT](https://github.com/TGSP1997/deep_sort)   |
-| StoneSoup    | [StoneSoup](https://stonesoup.readthedocs.io/en/latest/index.html)   |
