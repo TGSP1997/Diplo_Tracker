@@ -1,7 +1,0 @@
-pylint
-flake8
-jsonschema
-mypy
-pytest
-pytest-cov
-

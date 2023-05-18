@@ -63,8 +63,10 @@ class DeepSortTracker:
         min_detection_height: int,
         max_cosine_distance: float,
         nn_budget: int,
+        max_iou_distance: float,
+        max_age: int,
+        display: bool = False,
         modelpath: str = './resources/mars-small128.pb',
-        display: bool = False
     ) -> None:
         """
         Creates Class with needed parameters needed for DeepSort Tracker
@@ -105,6 +107,8 @@ class DeepSortTracker:
         self.max_cosine_distance = max_cosine_distance
         self.nn_budget = nn_budget
         self.display = display
+        self.max_age = max_age
+        self.max_iou_distance = max_iou_distance
 
     @timeit
     def run(self):
@@ -117,7 +121,10 @@ class DeepSortTracker:
             min_detection_height=self.min_detection_height,
             max_cosine_distance=self.max_cosine_distance,
             nn_budget= self.nn_budget,
-            display = self.display
+            display = self.display,
+            max_age=self.max_age,
+            max_iou_distance=self.max_iou_distance
+            
         )
 
     @timeit_fnc_only
@@ -143,6 +150,8 @@ if __name__ == "__main__":
         min_detection_height = 0,
         max_cosine_distance = 0.2,
         nn_budget = 100,
-        display = False
+        display = False,
+        max_age=200,
+        max_iou_distance=0.9
     )
     obj.run()
