@@ -18,6 +18,7 @@ def timeit(func):
             total_time = end_time - start_time
             # first item in the args, ie `args[0]` is `self`
             print(f'Function {func.__name__}{args} Took {total_time:.4f} seconds')
+            args[0].time = total_time
         finally:
             args[0].rename()
         return result
@@ -67,6 +68,7 @@ class IOUTracker:
         self.t_min = t_min
         self.t_miss_max = t_miss_max
         self.overwrite = overwrite
+        self.time = 0.0
 
     @timeit
     def run(self):

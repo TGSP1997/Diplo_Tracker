@@ -13,11 +13,13 @@ def write_txt_from_otdet(
     '''
     if not otdtet_file.is_file:
         raise ValueError('NO OTDET FILE FOUND')
-
+    allowed_classes = ["car","motorcycle","bus","train","truck"]
     ot_dict = read_json(otdtet_file)
     txt_lines = ''
     for frame, detections in ot_dict['data'].items():
         for detection in detections['detections']:
+            if detection['class'] not in allowed_classes:
+                continue
             bb_left = float(detection["x"]) - (float(detection["w"])/2)
             bb_top = float(detection["y"]) - (float(detection["h"])/2)
             txt_lines += (
