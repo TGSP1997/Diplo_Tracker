@@ -3,6 +3,7 @@ from pathlib import Path
 import time
 from functools import wraps
 import os
+from classes.helpers.convert_ot_files import write_txt_from_ottrk
 
 def timeit(func):
     """
@@ -21,6 +22,11 @@ def timeit(func):
             args[0].time = total_time
         finally:
             args[0].rename()
+            write_txt_from_ottrk(
+                ottrk_file=Path("./Sequences/test", args[0].sequence_name, "otc", f"{args[0].sequence_name}_iou.ottrk"),
+                txt_file= Path("./Sequences/test", args[0].sequence_name, "track", "track_iou.txt")
+            )
+
         return result
     return timeit_wrapper
 

@@ -1,7 +1,8 @@
 import argparse
 from pathlib import Path
 from OTVision.helpers.files import read_json
-
+import bz2
+import json
 
 def write_txt_from_otdet(
     otdtet_file: Path,
@@ -48,57 +49,75 @@ def write_ottrk_from_txt(
     #             overwrite=overwrite,
     #         )
 
+def write_txt_from_ottrk(
+        ottrk_file: Path,
+        txt_file: Path
+):
+    with bz2.open(ottrk_file.as_posix(),'r') as track_file2:
+        read_file = json.loads(track_file2.readlines()[0])
+    txt_lines=''
+    for detection in read_file['data']['detections']:
+        bb_left = float(detection["x"]) - (float(detection["w"])/2)
+        bb_top = float(detection["y"]) - (float(detection["h"])/2)
+        txt_lines+=(f'{detection["frame"]},{detection["track-id"]},{bb_left},{bb_top},{detection["w"]},{detection["h"]},1,-1,-1,-1\n')
 
-def parse(argv: list[str] | None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description='Converts "otdet" to MOTChallenge "txt" file')
-    parser.add_argument(
-        "--otdet_file",
-        nargs="+",
-        type=str,
-        help="Path to otdet-file",
-        required=False
-    )
-    parser.add_argument(
-        "--output_path",
-        nargs="+",
-        type=str,
-        help="Outputpath to write txt-file",
-        required=False
-    )
-    parser.add_argument(
-        "--write_txt_from_otdet",
-        nargs="+",
-        type=bool,
-        help="Bool to choose function",
-        required=False,
-        default=False
-    )
-    parser.add_argument(
-        "--write_ottrk_from_txt",
-        nargs="+",
-        type=bool,
-        help="Bool to choose function",
-        required=False,
-        default=False
-    )
-    return parser.parse_args(argv)
+    with open(
+        txt_file.as_posix(),
+        'w',
+        encoding = 'utf-8'
+    ) as text_file:
+        text_file.write(txt_lines)
 
-def main(argv: list[str] | None = None):
-    args = parse(argv)
-    if args.write_ottrk_from_txt == args.write_txt_from_otdet:
-        raise ValueError('You need to choose one function. See --help')
-    if args.write_txt_from_otdet:
-        if not args.otdet_file and not args.output_path:
-            raise ValueError('Need to define --otdet_file and --output_path')
-        write_txt_from_otdet(
-            Path(args.otdet_file[0]),
-            Path(args.output_path[0])
-        )
-    if args.write_ottrk_from_txt:
-        write_ottrk_from_txt(
+# def parse(argv: list[str] | None) -> argparse.Namespace:
+#     parser = argparse.ArgumentParser(description='Converts "otdet" to MOTChallenge "txt" file')
+#     parser.add_argument(
+#         "--otdet_file",
+#         nargs="+",
+#         type=str,
+#         help="Path to otdet-file",
+#         required=False
+#     )
+#     parser.add_argument(
+#         "--output_path",
+#         nargs="+",
+#         type=str,
+#         help="Outputpath to write txt-file",
+#         required=False
+#     )
+#     parser.add_argument(
+#         "--write_txt_from_otdet",
+#         nargs="+",
+#         type=bool,
+#         help="Bool to choose function",
+#         required=False,
+#         default=False
+#     )
+#     parser.add_argument(
+#         "--write_ottrk_from_txt",
+#         nargs="+",
+#         type=bool,
+#         help="Bool to choose function",
+#         required=False,
+#         default=False
+#     )
+#     return parser.parse_args(argv)
 
-        )
+# def main(argv: list[str] | None = None):
+#     args = parse(argv)
+#     if args.write_ottrk_from_txt == args.write_txt_from_otdet:
+#         raise ValueError('You need to choose one function. See --help')
+#     if args.write_txt_from_otdet:
+#         if not args.otdet_file and not args.output_path:
+#             raise ValueError('Need to define --otdet_file and --output_path')
+#         write_txt_from_otdet(
+#             Path(args.otdet_file[0]),
+#             Path(args.output_path[0])
+#         )
+#     if args.write_ottrk_from_txt:
+#         write_ottrk_from_txt(
+
+#         )
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
