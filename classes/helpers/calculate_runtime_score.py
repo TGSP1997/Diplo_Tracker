@@ -36,9 +36,8 @@ class ScoreCalculator:
         x_axis = []
         y_axis=[]
         for key, value in score_dict.items():
-            x_axis.append(key)
+            x_axis.append(key.encode().decode('unicode_escape'))
             y_axis.append(value)
-
         sorted_values = sorted(y_axis, reverse=True)
 
         _, ax = plt.subplots()
@@ -48,7 +47,7 @@ class ScoreCalculator:
         plt.bar_label(bar, fmt='%.2f')
         plt.xticks(y_pos,x_axis)
         plt.ylabel('Score in %')
-        ax.set_ylim(top=100)
+        ax.set_ylim(top=110)
         plt.title('Runtime Comparison')
         plt.tick_params(axis='x', which='both', bottom=False)
         plt.savefig(fname = self.csv_path.parent.joinpath('Runtime_Comparison.pdf').as_posix(),bbox_inches='tight')

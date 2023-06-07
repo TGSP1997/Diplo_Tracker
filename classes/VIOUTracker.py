@@ -26,6 +26,7 @@ def timeit(func):
             print(f'Function {func.__name__}{args} Took {total_time:.4f} seconds')
         finally:
             time.sleep(1)
+            args[0].runtime = total_time
             #TODO
             #write_ottrk_from_txt()
         return result
@@ -76,6 +77,7 @@ class VIOUTracker:
         self.tracker_type = tracker_type
         self.keep_upper_height_ratio = keep_upper_height_ratio
         self.t_min = t_min
+        self.runtime = 0
 
     @timeit
     def run(self):

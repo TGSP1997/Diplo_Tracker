@@ -27,6 +27,7 @@ def timeit(func):
             print(f'Function {func.__name__}{args} Took {total_time:.4f} seconds')
         finally:
             time.sleep(1)
+            args[0].runtime_1 = total_time
             #TODO
             #write_ottrk_from_txt()
         return result
@@ -46,7 +47,7 @@ def timeit_fnc_only(func):
         total_time = end_time - start_time
         # first item in the args, ie `args[0]` is `self`
         print(f'Function {func.__name__}{args} Took {total_time:.4f} seconds')
-        
+        args[0].runtime_2 = total_time
         return result
     return timeit_wrapper
 
@@ -109,6 +110,8 @@ class DeepSortTracker:
         self.display = display
         self.max_age = max_age
         self.max_iou_distance = max_iou_distance
+        self.runtime_1 = 0
+        self.runtime_2 = 0
 
     @timeit
     def run(self):

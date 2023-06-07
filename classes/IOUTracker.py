@@ -22,6 +22,7 @@ def timeit(func):
             args[0].time = total_time
         finally:
             args[0].rename()
+            args[0].runtime = total_time
             write_txt_from_ottrk(
                 ottrk_file=Path("./Sequences/test", args[0].sequence_name, "otc", f"{args[0].sequence_name}_iou.ottrk"),
                 txt_file= Path("./Sequences/test", args[0].sequence_name, "track", "track_iou.txt")
@@ -74,7 +75,7 @@ class IOUTracker:
         self.t_min = t_min
         self.t_miss_max = t_miss_max
         self.overwrite = overwrite
-        self.time = 0.0
+        self.runtime = 0
 
     @timeit
     def run(self):

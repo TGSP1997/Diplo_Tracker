@@ -21,8 +21,8 @@ def write_txt_from_otdet(
         for detection in detections['detections']:
             if detection['class'] not in allowed_classes:
                 continue
-            bb_left = float(detection["x"]) - (float(detection["w"])/2)
-            bb_top = float(detection["y"]) - (float(detection["h"])/2)
+            bb_left = float(detection["x"])# - (float(detection["w"])/2)
+            bb_top = float(detection["y"])# - (float(detection["h"])/2)
             txt_lines += (
                 f'{frame},-1,{bb_left},{bb_top},'
                 f'{detection["w"]},{detection["h"]},'
@@ -57,8 +57,8 @@ def write_txt_from_ottrk(
         read_file = json.loads(track_file2.readlines()[0])
     txt_lines=''
     for detection in read_file['data']['detections']:
-        bb_left = float(detection["x"]) - (float(detection["w"])/2)
-        bb_top = float(detection["y"]) - (float(detection["h"])/2)
+        bb_left = float(detection["x"]) #- (float(detection["w"])/2)
+        bb_top = float(detection["y"]) #- (float(detection["h"])/2)
         txt_lines+=(f'{detection["frame"]},{detection["track-id"]},{bb_left},{bb_top},{detection["w"]},{detection["h"]},1,-1,-1,-1\n')
 
     with open(

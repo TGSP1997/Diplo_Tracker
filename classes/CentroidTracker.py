@@ -37,6 +37,7 @@ def timeit(func):
             print(f'Function {func.__name__}{args} Took {total_time:.4f} seconds')
         finally:
             time.sleep(1)
+            args[0].runtime = total_time
             #TODO
             #write_ottrk_from_txt()
         return result
@@ -70,6 +71,7 @@ class CentroidTracker:
         self.sequence_name = sequence_name
         self.tracker = ct(max_lost, tracker_output_format='mot_challenge')
         self.with_kalman = with_kalman
+        self.runtime = 0
         if with_kalman:
             self.tracker = ctkal(
                 max_lost = max_lost,

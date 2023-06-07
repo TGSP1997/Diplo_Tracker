@@ -5,7 +5,7 @@ from typing import List
 import numpy as np
 
 
-def _get_track_data_and_id(sequence_name: str, track_names: List[str]):
+def get_track_data_and_id(sequence_name: str, track_names: List[str]):
     track_data_dict = {}
     max_id_dict = {}
     #load trackfiles into dict
@@ -72,7 +72,7 @@ def _create_video_writers(sequence_name: str, track_names: List[str], output_pat
 
 def create_videos(sequence_name:str):
     track_names = ['track_deep', 'track_ctkal', 'track_viou', 'track_iou', 'det']
-    track_data_dict, max_id_dict = _get_track_data_and_id(
+    track_data_dict, max_id_dict = get_track_data_and_id(
         sequence_name = sequence_name,
         track_names = track_names
     )
@@ -111,7 +111,6 @@ def create_videos(sequence_name:str):
 
                     x_start = int(x)
                     y_start = int(y)
-
                     x_end = int(x+w)
                     y_end = int(y+h)
                     max_id = 0
@@ -123,9 +122,9 @@ def create_videos(sequence_name:str):
                     
                     image_rect = cv2.rectangle(cv2_image,(x_start, y_start), (x_end, y_end), color_selected[color_count],2)
                     if track_name == 'det':
-                        image_text = cv2.putText(image_rect, f'{"{:1.2f}".format(float(element[6]))}', (int(x), int(y)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color_selected[color_count], 2)
+                        image_text = cv2.putText(image_rect, f'{"{:1.2f}".format(float(element[6]))}', (int(x_start), int(y_start)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color_selected[color_count], 2)
                     else:
-                        image_text = cv2.putText(image_rect, f'{element[1]}', (int(x), int(y)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color_selected[color_count], 2)
+                        image_text = cv2.putText(image_rect, f'{element[1]}', (int(x_start), int(y_start)-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color_selected[color_count], 2)
                     image_text2 = cv2.putText(image_text, f'Total-ID`s: {max_id}: {track_name}', (int(image_rect.shape[1]/8), image_rect.shape[0]-20), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color_selected[color_count], 2)
                     final_drawn_img = image_text2
                     
@@ -179,4 +178,5 @@ def create_videos(sequence_name:str):
         img_number+=1
 
 if __name__ == '__main__':
-    create_videos('Car')
+    #create_videos('Car')
+    create_videos('Car02')
