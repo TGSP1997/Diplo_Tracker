@@ -1,5 +1,6 @@
 - [**Diplo\_Tracker**](#diplo_tracker)
 - [**Installation**](#installation)
+- [**Structure**](#structure)
 - [**Folder Structure of Metadata**](#folder-structure-of-metadata)
 - [**Usage**](#usage)
 - [**References**](#references)
@@ -13,9 +14,15 @@ Following Tracker are implemented:
 * VIOU-Tracker
 ---
 # **Installation**
+Programm was created in Python 3.10.0<br />
 Execute the install.sh<br />
 It will create a venv-envirement and install the requierements
 
+
+---
+# **Structure**
+Tracker are implemented as Classes <br />
+Various helper functions exists to convert files
 
 ---
 # **Folder Structure of Metadata**
