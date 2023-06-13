@@ -15,7 +15,7 @@ def video_to_img(
     '''
     save_img_folder = output_path.joinpath(name)
     if not save_img_folder.is_dir():
-        save_img_folder.mkdir()
+        save_img_folder.mkdir(parents=True)
     vidcap = cv2.VideoCapture(video_file.as_posix())
     def get_frame(sec):
         vidcap.set(cv2.CAP_PROP_POS_MSEC,sec*1000)

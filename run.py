@@ -7,7 +7,6 @@ from classes.helpers.calculate_runtime_score import ScoreCalculator
 from classes.helpers.create_runtime_score import create_runtime_score
 sequence_names = create_folder_structure()
 print(sequence_names)
-sequence_names = ['Car','Car02']
 
 tracker_class_dict = {}
 for sequence_name in sequence_names:

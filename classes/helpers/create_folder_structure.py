@@ -12,5 +12,6 @@ def create_folder_structure():
         Path("./Sequences/test", f"{sequence}",'otc').mkdir(parents=True, exist_ok=True)
         Path("./Sequences/test", f"{sequence}",'track').mkdir(parents=True, exist_ok=True)
         Path("./Sequences/test", f"{sequence}",'video').mkdir(parents=True, exist_ok=True)
+        Path("./Sequences/test", f"{sequence}",'gt').mkdir(parents=True, exist_ok=True)
     
     return sequence_names
