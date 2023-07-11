@@ -1,4 +1,9 @@
-from OTVision.track.track import main as tracker
+"""
+Class for IOUTracker
+"""
+
+
+from OTVision.track.track import main as tracker # type: ignore[import]
 from pathlib import Path
 import time
 from functools import wraps

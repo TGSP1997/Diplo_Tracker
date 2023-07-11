@@ -1,3 +1,8 @@
+"""
+Helper to convert image and video files into each other
+"""
+
+
 import argparse
 from pathlib import Path
 import cv2
@@ -10,25 +15,34 @@ def video_to_img(
     frame_rate: int,
     format_type: str
 ) -> None:
-    '''
-    Converts a video to img-sequence
-    '''
+    """Converts a video to img-sequence
+
+    Args:
+        video_file (Path): Input video file
+        output_path (Path): Path where folder is created
+        name (str): Name of Folder to save
+        frame_rate (int): Framerate of video
+        format_type (str): Format of Picture Sequence
+
+    
+    """
     save_img_folder = output_path.joinpath(name)
     if not save_img_folder.is_dir():
-        save_img_folder.mkdir(parents=True)
-    vidcap = cv2.VideoCapture(video_file.as_posix())
+        save_img_folder.mkdir(parents = True)
+    vidcap = cv2.VideoCapture(video_file.as_posix()) # type: ignore[call-arg]
     def get_frame(sec):
-        vidcap.set(cv2.CAP_PROP_POS_MSEC,sec*1000)
-        has_frames,image = vidcap.read()
+        vidcap.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
+        has_frames, image = vidcap.read()
         if has_frames:
             cv2.imwrite(save_img_folder.joinpath(f'{count:06d}.{format_type}').as_posix(), image)
         return has_frames
-    sec = 0
-    count=1
+
+    sec = 0.0
+    count = 1
     success = get_frame(sec)
     while success:
         count = count + 1
-        sec = sec + float(1/frame_rate)
+        sec = sec + float(1 / frame_rate)
         sec = round(sec, 2)
         success = get_frame(sec)
 
@@ -40,9 +54,16 @@ def img_to_video(
     frame_rate: int,
     format_type: str
 ) -> None:
-    '''
-    Converts a img-sequence to video
-    '''
+    """Converts a img-sequence to video
+
+    Args:
+        img_folder (Path): Folder which contains the image sequence
+        output_path (Path): Path where folder is created
+        name (str): Name of Folder to save
+        frame_rate (int): Framerate of video
+        format_type (str): Format of Picture Sequence
+
+    """
     if not img_folder.is_dir():
         raise ValueError('NO FOULDER FOUND')
     list_of_imgs = []
@@ -51,11 +72,11 @@ def img_to_video(
     if len(list_of_imgs) == 0:
         raise ValueError(f'NO PICTURES WITH FORMAT {format_type.upper()} FOUND INSIDE IMG-FOLDER')
     frame = cv2.imread(list_of_imgs[0].as_posix())
-    video =cv2.VideoWriter(
+    video = cv2.VideoWriter( # type: ignore[call-arg]
         output_path.joinpath(f'{name}.mp4').as_posix(),
         cv2.VideoWriter_fourcc(*'mp4v'),
-        fps=frame_rate,
-        frameSize= (
+        fps = frame_rate,
+        frameSize = (
             frame.shape[1],
             frame.shape[0]
         )
@@ -68,6 +89,9 @@ def img_to_video(
 
 
 def parse(argv: list[str] | None) -> argparse.Namespace:
+    """
+    Parser Function to seperate parser arguments
+    """
     parser = argparse.ArgumentParser(
         description='Converts video to img-sequence or img-sequence to video file'
     )
@@ -121,6 +145,9 @@ def parse(argv: list[str] | None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> None:
+    """
+    Main function for terminal use see -h for help
+    """
     args = parse(argv)
     if args.video_file == args.img_folder:
         raise ValueError('You need to choose one input. Either --video_file or --img_folder')

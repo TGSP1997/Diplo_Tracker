@@ -1,3 +1,8 @@
+"""
+Class for CentroidTracker
+"""
+
+
 #oriented from https://github.com/TGSP1997/multi-object-tracker/blob/master/examples/example_notebooks/mot_YOLOv3.ipynb
 import csv
 import numpy as np
@@ -5,15 +10,9 @@ from pathlib import Path
 import time
 from functools import wraps
 from typing import Optional
-from motrackers import CentroidTracker as ct
+from motrackers import CentroidTracker as ct # type: ignore[import]
 from motrackers import CentroidKF_Tracker as ctkal
-from .helpers.convert_ot_files import write_txt_from_otdet, write_ottrk_from_txt
-
-
-
-
-
-
+from .helpers.convert_ot_files import write_txt_from_otdet#, write_ottrk_from_txt
 
 
 def timeit(func):
@@ -25,7 +24,7 @@ def timeit(func):
     def timeit_wrapper(*args, **kwargs):
         write_txt_from_otdet(
             args[0].otdet_path,
-            Path("./Sequences/test", args[0].sequence_name,"det")
+            Path("./Sequences/test", args[0].sequence_name, "det")
         )
         time.sleep(1)
         try:
@@ -53,7 +52,7 @@ class CentroidTracker:
         sequence_name:str,
         max_lost: int,
         with_kalman: bool = False,
-        centroid_distance_threshold: Optional[int] = 30.,
+        centroid_distance_threshold: Optional[float] = 30.0,
         process_noise_scale: Optional[float] = 1.0,
         measurement_noise_scale: Optional[float] = 1.0,
         time_step: Optional[int] = 1

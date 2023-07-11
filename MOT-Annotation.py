@@ -1,20 +1,17 @@
+# type: ignore
+# pylint: skip-file
 #edited but source is: https://github.com/TGSP1997/MOT16_Annotator/https://github.com/khalidw/MOT16_Annotator
-import cv2, numpy as np
-import argparse
-import os
-
+import cv2
 
 # Click on one corner of the image,
 # then, click on the other corner on the image.
 # The coordinates will be saved in gt/gt.txt
-
 from pathlib import Path
 # Press 'esc' to quit
 # Press 'n' for next frame
 
-# Before you begin, change the path to you own video:
-#cap = cv2.VideoCapture(args['location'])
-sequence_name = 'Sequence01_2020-01-01_00-00-00'
+
+sequence_name = 'Sequence05_2020-01-01_00-00-00'
 img_folder = Path(f'./Sequences/test/{sequence_name}/img1')
 # Create a folder "det" for the detections in the same location as input video:
 path_to_detection_folder = Path(f'./Sequences/test/{sequence_name}/gt')
@@ -24,7 +21,7 @@ if not path_to_detection_folder.is_dir():
   raise ValueError('no such folder exists')
 
 list_of_imgs = []
-for file in img_folder.glob(f'*.jpg'):
+for file in img_folder.glob(f'*.jpeg'):
     list_of_imgs.append(file)
 len_list_of_images = len(list_of_imgs)
 #mouse callback function
@@ -34,6 +31,7 @@ positions, click_list = [], []
 
 def callback(event, x, y, flags, param):
     if event == 1: click_list.append((x,y))
+    if event == 2: click_list.clear()
     positions.append((x,y))    
     
 cv2.namedWindow('img')
@@ -61,23 +59,26 @@ with open(new_path.as_posix(),'w') as out_file:
 
   while True:
     img = img_p.copy()
-
+    if len(positions)>1:
+      movement = positions[-1]
+      cv2.line(img, (movement[0]-w,movement[1]), (movement[0]+w,movement[1]), (102,102,255), 1)
+      cv2.line(img, (movement[0],movement[1]-h), (movement[0],movement[1]+h), (102,102,255), 1)
     if len(click_list)>0:
 
       mouse_position = positions[-1]
-
+      #horizontal high left to right
       a = click_list[-1][0], click_list[-1][1]
       b = mouse_position[0], click_list[-1][1]
       cv2.line(img, a, b, (123,234,123), 3)
-
+      #horizontal low left to right
       a = click_list[-1][0], mouse_position[1]
       b = mouse_position[0], mouse_position[1]
       cv2.line(img, a, b, (123,234,123), 3)
-
+      #vertical right high to low
       a = mouse_position[0], click_list[-1][1]
       b = mouse_position[0], mouse_position[1]
       cv2.line(img, a, b, (123,234,123), 3)
-
+      #vertical left high to low
       a = click_list[-1][0], mouse_position[1]
       b = click_list[-1][0], click_list[-1][1]
       cv2.line(img, a, b, (123,234,123), 3)
@@ -99,8 +100,8 @@ with open(new_path.as_posix(),'w') as out_file:
       ymax = max(a[1],b[1])*rf_h
       width = xmax-xmin
       height = ymax-ymin
-      print('%d,%d,%.2f,%.2f,%.2f,%.2f,1,-1,-1,-1'%(frame_number,object_id,xmin,ymin,width,height),file=out_file)
-      print(f"{frame_number}, {object_id}, {xmin}, {ymin}, {width}, {height}, 1, -1, -1, -1")
+      print('%d,%d,%.2f,%.2f,%.2f,%.2f,1,1,-1,-1'%(frame_number,object_id,xmin,ymin,width,height),file=out_file)
+      print(f"{frame_number}, {object_id}, {xmin}, {ymin}, {width}, {height}, 1, 1, -1, -1")
 
       #reset the click list
       click_list = []

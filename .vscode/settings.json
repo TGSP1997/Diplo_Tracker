@@ -1,14 +1,15 @@
 {
   "python.formatting.provider": "black",
   "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": ["--generated-members=cv2.*", "--extension-pkg-whitelist=cv2"],
   "python.linting.flake8Enabled": false,
   "python.linting.enabled": true,
+  "json.validate.enable": false,
   "python.languageServer": "Pylance",
   "python.testing.pytestArgs": [
     "tests"
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
-  "python.linting.ignorePatterns": ["ExtRepros/**/*.py" ],
-  "python.defaultInterpreterPath": "venv\Scripts\python.exe"
+  "python.defaultInterpreterPath": "venv/Scripts/python.exe"
 }

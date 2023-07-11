@@ -1,5 +1,10 @@
-from IOUTracker.viou_tracker import track_viou
-from IOUTracker.util import load_mot, save_to_csv
+"""
+Class for VIOUTracker
+"""
+
+
+from IOUTracker.viou_tracker import track_viou # type: ignore[import]
+from IOUTracker.util import load_mot, save_to_csv # type: ignore[import]
 from .helpers.convert_ot_files import write_txt_from_otdet
 from pathlib import Path
 import time
@@ -68,7 +73,7 @@ class VIOUTracker:
         """
         self.otdet_path = Path("./Sequences/test", sequence_name, "otc", f"{sequence_name}.otdet")
         self.sequence_name = sequence_name
-        self.frames_path = Path("./Sequences/test", sequence_name, "img1", "{:06d}.jpg")
+        self.frames_path = Path("./Sequences/test", sequence_name, "img1", "{:06d}.jpeg")
         self.detections_path = Path("./Sequences/test", sequence_name, "det/det.txt")
         self.sigma_l = sigma_l
         self.sigma_h = sigma_h

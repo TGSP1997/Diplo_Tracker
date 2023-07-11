@@ -1,5 +1,10 @@
-from deep_sort.tools.generate_detections import generate_detections, create_box_encoder
-from deep_sort.deep_sort_app import run
+"""
+Class for DeepsortTracker
+"""
+
+
+from deep_sort.tools.generate_detections import generate_detections, create_box_encoder # type: ignore[import]
+from deep_sort.deep_sort_app import run # type: ignore[import]
 from pathlib import Path
 import time
 from functools import wraps
